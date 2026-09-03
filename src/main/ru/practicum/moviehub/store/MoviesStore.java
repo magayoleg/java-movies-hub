@@ -9,7 +9,9 @@ import java.util.TreeMap;
 public class MoviesStore {
     private TreeMap<Integer, Movie> store = new TreeMap<>();
 
-    public MoviesStore() {}
+    public MoviesStore() {
+
+    }
 
     public MoviesStore(ArrayList<Movie> movieList) {
         movieList.stream().forEach(movie -> {
