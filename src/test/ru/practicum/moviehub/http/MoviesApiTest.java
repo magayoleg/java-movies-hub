@@ -27,11 +27,13 @@ public class MoviesApiTest {
     private static MoviesServer server;
     private static HttpClient client;
     private static Gson gson;
+    private static MoviesStore store;
     private static HttpResponse.BodyHandler<String> responseBodyHandler;
 
     @BeforeAll
     static void beforeAll() {
-        server = new MoviesServer(8080, new MoviesStore());
+        store = new MoviesStore();
+        server = new MoviesServer(8080, store);
         server.start();
         gson = new Gson();
 
@@ -44,6 +46,8 @@ public class MoviesApiTest {
 
     @BeforeEach
     void beforeEach() throws IOException, InterruptedException {
+        store.resetStore();
+
         HashMap<String, Object> movie1 = new HashMap<>();
         movie1.put("title", "Интерстеллар");
         movie1.put("year", "2014");
@@ -121,6 +125,7 @@ public class MoviesApiTest {
 
         String body = resp.body().trim();
         ArrayList<Movie> movies = gson.fromJson(body, new TypeToken<ArrayList<Movie>>(){}.getType());
+
         assertEquals(2, movies.size());
 
         assertEquals("Интерстеллар", movies.get(0).getTitle());

@@ -50,6 +50,10 @@ public class MoviesStore {
         return store.remove(id);
     }
 
+    public void resetStore() {
+        this.store = new TreeMap<>();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
