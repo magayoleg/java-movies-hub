@@ -45,6 +45,7 @@ public class MoviesStore {
         });
         return filteredMovie;
     }
+
     public Movie deleteMovie(Integer id) {
         return store.remove(id);
     }
