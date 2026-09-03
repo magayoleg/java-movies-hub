@@ -1,6 +1,6 @@
 package ru.practicum.moviehub.model;
 
-import java.time.LocalDate;
+import java.time.Year;
 
 public class Movie {
     private int id;

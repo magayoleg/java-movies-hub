@@ -2,6 +2,7 @@ package ru.practicum.moviehub.store;
 
 import ru.practicum.moviehub.model.Movie;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.TreeMap;
 
@@ -10,31 +11,40 @@ public class MoviesStore {
 
     public MoviesStore() {}
 
-    public MoviesStore(TreeMap<Integer, Movie> movies) {
-        this.store = movies;
+    public MoviesStore(ArrayList<Movie> movieList) {
+        movieList.stream().forEach(movie -> {
+            store.put(movie.getId(), movie);
+        });
     }
 
     public void addMovie(Movie movie) {
         store.put(movie.getId(), movie);
     }
-    public TreeMap<Integer, Movie> getMovies() {
+
+    public TreeMap<Integer, Movie> getStore() {
         return store;
     }
+
+    public ArrayList<Movie> getMovies() {
+        return new ArrayList<>(store.values());
+    }
+
     public Movie searchMovieById(Integer id) {
         return store.get(id);
     }
-    public TreeMap<Integer, Movie> filterMovieByYear(Integer year) {
-        TreeMap<Integer, Movie> filteredMovie = new TreeMap<>();
+
+    public ArrayList<Movie> filterMovieByYear(Integer year) {
+        ArrayList<Movie> filteredMovie = new ArrayList<>();
 
         store.values().forEach(movie -> {
             if(movie.getYear() == year) {
-                filteredMovie.put(movie.getId(), movie);
+                filteredMovie.add(movie);
             }
         });
         return filteredMovie;
     }
-    public void deleteMovie(Integer id) {
-        store.remove(id);
+    public Movie deleteMovie(Integer id) {
+        return store.remove(id);
     }
 
     @Override
