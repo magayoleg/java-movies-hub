@@ -28,6 +28,7 @@ public class MoviesApiTest {
     private static HttpClient client;
     private static Gson gson;
     private static HttpResponse.BodyHandler<String> responseBodyHandler;
+
     @BeforeAll
     static void beforeAll() {
         server = new MoviesServer(8080, new MoviesStore());
@@ -43,30 +44,30 @@ public class MoviesApiTest {
 
     @BeforeEach
     void beforeEach() throws IOException, InterruptedException {
-        HashMap<String, Object> movie_1 = new HashMap<>();
-        movie_1.put("title", "Интерстеллар");
-        movie_1.put("year", "2014");
-        String json_1 = gson.toJson(movie_1);
-        HttpRequest.BodyPublisher body_1 = HttpRequest.BodyPublishers.ofString(json_1);
-        HttpRequest postReq_1 = HttpRequest.newBuilder()
+        HashMap<String, Object> movie1 = new HashMap<>();
+        movie1.put("title", "Интерстеллар");
+        movie1.put("year", "2014");
+        String json1 = gson.toJson(movie1);
+        HttpRequest.BodyPublisher body1 = HttpRequest.BodyPublishers.ofString(json1);
+        HttpRequest postReq1 = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
                 .setHeader("Content-Type", "application/json; charset=UTF-8")
-                .POST(body_1)
+                .POST(body1)
                 .build();
-        client.send(postReq_1, responseBodyHandler);
+        client.send(postReq1, responseBodyHandler);
 
 
-        HashMap<String, Object> movie_2 = new HashMap<>();
-        movie_2.put("title", "Побег из Шоушенка");
-        movie_2.put("year", "1994");
-        String json_2 = gson.toJson(movie_2);
-        HttpRequest.BodyPublisher body_2 = HttpRequest.BodyPublishers.ofString(json_2);
-        HttpRequest postReq_2 = HttpRequest.newBuilder()
+        HashMap<String, Object> movie2 = new HashMap<>();
+        movie2.put("title", "Побег из Шоушенка");
+        movie2.put("year", "1994");
+        String json2 = gson.toJson(movie2);
+        HttpRequest.BodyPublisher body2 = HttpRequest.BodyPublishers.ofString(json2);
+        HttpRequest postReq2 = HttpRequest.newBuilder()
                 .uri(URI.create(BASE + "/movies"))
                 .setHeader("Content-Type", "application/json; charset=UTF-8")
-                .POST(body_2)
+                .POST(body2)
                 .build();
-        client.send(postReq_2, responseBodyHandler);
+        client.send(postReq2, responseBodyHandler);
     }
 
     @AfterAll
