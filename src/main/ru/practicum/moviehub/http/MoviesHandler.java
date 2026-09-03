@@ -47,7 +47,7 @@ public class MoviesHandler implements HttpHandler {
     }
 
     private void handleGet(HttpExchange ex, String path) throws IOException {
-        try{
+        try {
             Integer id = extractIdFromPath(path);
             String method = ex.getRequestMethod();
             String queryString = ex.getRequestURI().getQuery();
@@ -71,7 +71,7 @@ public class MoviesHandler implements HttpHandler {
                 String json = gson.toJson(movies);
                 BaseHttpHandler.sendJson(ex,200, json);
             } else if (method.equalsIgnoreCase("GET")) {
-                try{
+                try {
                     Optional<Integer> queryYear = Arrays.stream(queryString.split("&"))
                             .map(param -> param.split("=", 2))
                             .filter(pair -> pair.length == 2 && pair[0].equals("year"))
@@ -97,7 +97,7 @@ public class MoviesHandler implements HttpHandler {
             String contentType = headers.getFirst("Content-Type");
             Gson gson = new Gson();
 
-            if(!contentType.equals("application/json; charset=UTF-8")) {
+            if (!contentType.equals("application/json; charset=UTF-8")) {
                 BaseHttpHandler.sendNoContent(ex, 415);
                 return;
             }
@@ -112,7 +112,7 @@ public class MoviesHandler implements HttpHandler {
                 String title = data.get("title").toString();
                 String year = data.get("year").toString();
 
-                if(year.isEmpty()) {
+                if (year.isEmpty()) {
                     BaseHttpHandler.sendJson(ex, 422, "[год не может быть пустым]");
                     return;
                 }
@@ -122,10 +122,10 @@ public class MoviesHandler implements HttpHandler {
                 TreeMap<Integer, Movie> store = moviesStore.getStore();
                 int id = store.isEmpty() ? 1 : store.lastKey() + 1;
 
-                boolean isValidTitle = !title.isEmpty() && title.length() <=100;
+                boolean isValidTitle = !title.isEmpty() && title.length() <= 100;
                 boolean isValidYear = yearInt >= 1888 && yearInt <= Year.now().getValue() + 1;
 
-                if(!isValidTitle || !isValidYear) {
+                if (!isValidTitle || !isValidYear) {
                     BaseHttpHandler.sendJson(ex, 422, "[\"название не должно быть пустым\", \"год должен быть между 1888 и 2026\"]");
                     return;
                 }
@@ -140,7 +140,7 @@ public class MoviesHandler implements HttpHandler {
 
     private void handleDelete(HttpExchange ex, String path) throws IOException {
         Integer id = extractIdFromPath(path);
-        if(id != null) {
+        if (id != null) {
             Movie movie = moviesStore.deleteMovie(id);
             int status = movie == null ? 404 : 204;
             BaseHttpHandler.sendNoContent(ex, status);

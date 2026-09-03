@@ -37,7 +37,7 @@ public class MoviesStore {
         ArrayList<Movie> filteredMovie = new ArrayList<>();
 
         store.values().forEach(movie -> {
-            if(movie.getYear() == year) {
+            if (movie.getYear() == year) {
                 filteredMovie.add(movie);
             }
         });
