@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 public class MoviesStore {
     private TreeMap<Integer, Movie> store = new TreeMap<>();
-
+    private int lastMovieId = 0;
     public MoviesStore() {
 
     }
@@ -19,8 +19,13 @@ public class MoviesStore {
         });
     }
 
-    public void addMovie(Movie movie) {
-        store.put(movie.getId(), movie);
+    public int addMovie(String title, int year) {
+        lastMovieId++;
+        Movie newMovie = new Movie(lastMovieId, title, year);
+
+        store.put(lastMovieId, newMovie);
+
+        return lastMovieId;
     }
 
     public TreeMap<Integer, Movie> getStore() {
@@ -52,6 +57,7 @@ public class MoviesStore {
 
     public void resetStore() {
         this.store = new TreeMap<>();
+        this.lastMovieId = 0;
     }
 
     @Override
