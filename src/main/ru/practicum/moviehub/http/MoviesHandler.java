@@ -150,7 +150,7 @@ public class MoviesHandler implements HttpHandler {
         Integer id = extractIdFromPath(path);
         if (id != null) {
             Movie movie = moviesStore.deleteMovie(id);
-            if(movie == null) {
+            if (movie == null) {
                 ErrorResponse.sendError404(ex, "[Не найдено]");
                 return;
             }
