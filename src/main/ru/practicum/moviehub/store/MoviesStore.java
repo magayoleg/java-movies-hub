@@ -9,6 +9,7 @@ import java.util.TreeMap;
 public class MoviesStore {
     private TreeMap<Integer, Movie> store = new TreeMap<>();
     private int lastMovieId = 0;
+
     public MoviesStore() {
 
     }
@@ -69,6 +70,7 @@ public class MoviesStore {
 
     @Override
     public int hashCode() {
+
         return Objects.hashCode(store);
     }
 }
